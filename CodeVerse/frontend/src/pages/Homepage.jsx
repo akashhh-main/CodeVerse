@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axiosClient from '../utils/axiosClient';
 import { logoutUser } from '../authSlice';
+import { useNavigate } from 'react-router-dom';
 
 function Button({ children, variant = 'primary', className = '', ...props }) {
   const baseClasses =
@@ -37,6 +38,7 @@ function Button({ children, variant = 'primary', className = '', ...props }) {
 }
 
 function Homepage() {
+   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -181,7 +183,10 @@ function Homepage() {
         return filteredProblems;
     }
   }, [activeTab, solved, unsolved, filteredProblems]);
-
+  
+ const handleExploreClick = () => {
+  navigate('/explore', { replace: true }); // Add replace: true
+};
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Enhanced Header with Glass Morphism */}
@@ -312,7 +317,10 @@ function Homepage() {
               and get interview-ready with our structured learning paths.
             </p>
             <div className="flex space-x-4">
-              <Button variant="secondary" className="bg-white/10 hover:bg-white/20 border-white/20">
+
+              <Button 
+               onClick={handleExploreClick}
+              variant="secondary" className="bg-white/10 hover:bg-white/20 border-white/20">
                 Explore Learning Paths
               </Button>
               <Button variant="primary" className="bg-white text-blue-600 hover:bg-gray-100">
